@@ -13,7 +13,7 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
   imagelite-api:
-    build: "/source"
+    build: "./source/"
     container_name: imagelite-api
     restart: on-failure
     ports:
