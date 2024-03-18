@@ -15,19 +15,9 @@ import static com.gabriel.imageliteapi.infra.repository.specs.GenericSpecs.*;
 import static com.gabriel.imageliteapi.infra.repository.specs.ImageSpecs.*;
 import static org.springframework.data.jpa.domain.Specification.*;
 
-public interface ImageRepository extends JpaRepository<Image, String>, JpaSpecificationExecutor<Image> {
+public interface ImageRepository extends JpaRepository<Image, String> {
 
-    default List<Image> findByExtensionAndNameOrTagsLike(ImageExtension extension, String query) {
-        Specification<Image> spec = where(conjunction());
-
-        if (extension != null) {
-            spec = spec.and(extensionEqual(extension));
-        }
-
-        if (StringUtils.hasText(query)) {
-            spec = spec.and(anyOf(nameLike(query), tagsLike(query)));
-        }
-
-        return findAll(spec);
+    default List<Image> findByExtensionAndNameOrTagsLike() {
+        return findAll();
     }
 }

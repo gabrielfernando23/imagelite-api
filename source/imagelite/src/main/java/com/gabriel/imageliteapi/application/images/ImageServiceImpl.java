@@ -27,7 +27,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<Image> search(ImageExtension extension, String query) {
-        return repository.findByExtensionAndNameOrTagsLike(extension, query);
+    public List<Image> search() {
+        return repository.findByExtensionAndNameOrTagsLike();
     }
 }

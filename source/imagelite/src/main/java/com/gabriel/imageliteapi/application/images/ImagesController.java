@@ -56,11 +56,9 @@ public class ImagesController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ImageDto>> search(
-            @RequestParam(value = "extension", required = false, defaultValue = "") String extension,
-            @RequestParam(value = "query", required = false, defaultValue = "") String query) {
+    public ResponseEntity<List<ImageDto>> search() {
 
-        var result = service.search(ImageExtension.ofName(extension),query);
+        var result = service.search();
 
          var images = result.stream().map(image -> {
             var url = buildImageURL(image);
