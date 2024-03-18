@@ -2,22 +2,22 @@ version: '3.9'
 
 services:
   db:
-      image: mysql
-      container_name: mysql-container
-      environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: sanittas
-      volumes:
-        - ./db/data:/var/lib/mysql:rw
-      restart: always
-      ports:
-        - 3306:3306
-      networks:
-        - sanittas
-      healthcheck:
-        test: [ "CMD-SHELL", "mysqladmin ping -hlocalhost -uroot -proot"]
-        timeout: 60s
-        retries: 10
+    image: mysql
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sanittas
+    volumes:
+      - ./db/data:/var/lib/mysql:rw
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - sanittas
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -hlocalhost -uroot -proot"]
+      timeout: 60s
+      retries: 10
   imagelite-api:
     build: "./source/"
     container_name: imagelite-api
@@ -29,7 +29,7 @@ services:
     depends_on:
       - db
 networks:
-  sanittas:
-    driver: bridge
+    sanittas:
+      driver: bridge
 
     
