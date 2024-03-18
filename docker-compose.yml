@@ -2,31 +2,34 @@ version: '3.9'
 
 services:
   db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: imagelite
-    ports:
-      - '5432:5432'
-    volumes:
-      - ./data:/var/lib/postgresql/data
+      image: mysql
+      container_name: mysql-container
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: sanittas
+      volumes:
+        - ./db/data:/var/lib/mysql
+      restart: always
+      ports:
+        - 3306:3306
+      networks:
+        - sanittas
+      healthcheck:
+        test: [ "CMD-SHELL", "mysqladmin ping -hlocalhost -uroot -proot"]
+        timeout: 60s
+        retries: 10
   imagelite-api:
     build: "./source/"
     container_name: imagelite-api
     restart: on-failure
+    networks:
+      - sanittas
     ports:
-       - "8080:8080"
+      - "8080:8080"
     depends_on:
       - db
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-    ports:
-      - '15432:80'
-    depends_on:
-      - db
+networks:
+  sanittas:
+    driver: bridge
+
+    
