@@ -25,11 +25,11 @@ services:
     networks:
       - sanittas
     ports:
-      - "8081:8080"
+      - "8080:8080"
     depends_on:
       - db
   node-service:  # Adicionando o serviço Node.js
-    image: node:latest  # Você pode substituir "latest" pela versão específica do Node.js que deseja usar
+    build: "./imagelite/"
     container_name: node-service
     restart: always
     networks:
@@ -37,10 +37,6 @@ services:
     ports:
       - "80:3000"  # Porta utilizada pelo serviço Node.js
     # Outras configurações específicas do serviço Node.js podem ser adicionadas aqui
-    volumes:
-     - ./imagelite:/app
-    command:
-      - npm run dev
 networks:
   sanittas:
     driver: bridge
